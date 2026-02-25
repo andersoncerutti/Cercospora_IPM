@@ -1,0 +1,2 @@
+"0","IPM_data <- readxl::read_xlsx(""data/Cercospora_IPM_measure.xlsx"",""IPM"")"
+"0","IPM_desc <- readxl::read_xlsx(""data/Cercospora_IPM_description.xlsx"", ""IPM"")"

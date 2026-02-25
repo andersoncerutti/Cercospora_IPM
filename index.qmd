@@ -1,0 +1,245 @@
+---
+title: "Analysis Cercospora IPM"
+author: "Anderson Cerutti"
+format:
+  html:
+    code-fold: false
+    smooth-scroll: true
+    fig-width: 16
+    fig-height: 10
+    css: styles.css
+    self-contained: true
+    df-print: paged
+    #code-tools:
+      #source: true
+      #toggle: true
+      #caption: "Source code"
+theme: "lumen"
+toc: true
+toc-location: left
+toc-depth: 10
+fontcolor: "black" # {html} Color of text.
+linkcolor: "#007FFF" # {html, pdf, beamer} Color of link text.
+reference-location: "margin"
+colortheme: "black"
+highlight: monochrome
+warning: false
+cache: true
+---
+
+# Data and packages
+
+## Packages
+
+```{r}
+library(tidyverse)
+library(lme4)
+library(emmeans)
+library(ggplot2)
+library(car)
+library(performance)
+library(patchwork)
+library(sjPlot)
+library(flextable)
+library(multcomp)
+library(multcompView)
+
+conflicted::conflict_prefer("select", "dplyr")
+conflicted::conflict_prefer("filter", "dplyr")
+```
+
+## Data
+
+IPM_desc
+
+```{r}
+IPM_data <- readxl::read_xlsx("data/Cercospora_IPM_measure.xlsx","IPM")
+IPM_desc <- readxl::read_xlsx("data/Cercospora_IPM_description.xlsx", "IPM")
+```
+
+```{r}
+IPM_data_disease <-  IPM_data
+IPM_data_yield   <-  IPM_desc
+  
+n_lesion_plot <- IPM_data_disease %>%
+  filter(lesion_n > 0) %>%
+  group_by(year, trial_ID, plot) %>%
+  summarise(
+    CPB = mean(CPB, na.rm = TRUE),
+    n_lesion = n(),
+    .groups = "drop",
+    inc  = (n_lesion * 100)/50)
+
+IPM_yield_data <- IPM_data_yield %>% 
+  mutate(
+     yld = weight_12/(80/43560), 
+     kg_ha = yld*1.2085) %>% 
+  dplyr::select(year, trial_ID, trial, env, field, plot, blk, trt, 
+                  gen, fung_time, total, head, yld, kg_ha, NBLS)
+
+CERC_IPM_data <- right_join(IPM_yield_data, n_lesion_plot,
+                  by = c("year","trial_ID","plot")) %>%
+                  filter(!field %in% c("WIN")) %>%
+                  filter(!gen %in% c("Titan" , "Mermentau" , "PURPLE")) %>%
+                  filter(!fung_time == "Head/Flor") %>% 
+  mutate(
+    pressure = ifelse(inc > median(inc), "high", "low"))
+
+median(CERC_IPM_data$inc)
+mean(CERC_IPM_data$inc)
+CERC_IPM_data %>% 
+  group_by(pressure) %>% 
+  summarise(n=n())
+```
+
+### Descriptive
+
+```{r}
+ggplot(CERC_IPM_data, aes(x = gen, y = kg_ha, color = env)) +
+  geom_boxplot() +
+  geom_point(size=2) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  facet_wrap(~fung_time)
+```
+
+```{r}
+ggplot(CERC_IPM_data, aes(x = gen, y = kg_ha, color = as.factor(year))) +
+  geom_boxplot() +
+  geom_point(size=2) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  facet_wrap(~fung_time)
+```
+
+```{r}
+ggplot(CERC_IPM_data, aes(x = fung_time, y = kg_ha)) +
+  geom_boxplot() +
+  geom_point(size=2) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  facet_wrap(~pressure)
+```
+
+```{r}
+ggplot(CERC_IPM_data, aes(x = total, y = kg_ha)) +
+  geom_point(size=2) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  facet_wrap(~fung_time)
+```
+
+```{r}
+ggplot(CERC_IPM_data, aes(x = total, y = kg_ha)) +
+  geom_point(size=2) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  facet_wrap(~gen, ncol=4)
+```
+
+```{r}
+ggplot(CERC_IPM_data, aes(x = head, y = kg_ha)) +
+  geom_point(size=2) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  facet_wrap(~env)
+```
+
+```{r}
+ggplot(CERC_IPM_data, aes(x = head, y = kg_ha)) +
+  geom_point(size=2) +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  facet_wrap(~gen, ncol=4)
+```
+
+## Fitting
+
+### Prod
+
+```{r}
+mix_yld  <- lmer(kg_ha ~ 1 + ( 1 | blk), data=CERC_IPM_data, REML=F)
+mix_yld1 <- lmer(kg_ha ~ gen + ( 1 | year / blk), data=CERC_IPM_data, REML=F)
+mix_yld2 <- lmer(kg_ha ~ gen * fung_time + ( 1 | year / blk), data=CERC_IPM_data, REML=F)
+mix_yld3 <- lmer(kg_ha ~ gen * pressure + ( 1 | year / blk), data=CERC_IPM_data, REML=F)
+mix_yld4 <- lmer(kg_ha ~ pressure * fung_time + ( 1 | year / blk), data=CERC_IPM_data, REML=F)
+mix_yld5 <- lmer(kg_ha ~ gen * fung_time * pressure + ( 1 | year/ blk), data=CERC_IPM_data, REML=F)
+mix_yld6 <- lmer(kg_ha ~ gen * fung_time * pressure + ( 1 | env / blk), data=CERC_IPM_data, REML=F)
+mix_yld7 <- lmer(kg_ha ~ gen * fung_time * pressure + ( 1 | year / env), data=CERC_IPM_data, REML=F)
+
+AIC(mix_yld, mix_yld1, mix_yld2, mix_yld3, mix_yld4, mix_yld5, mix_yld6, mix_yld7)
+BIC(mix_yld, mix_yld1, mix_yld2, mix_yld3, mix_yld4, mix_yld5, mix_yld6, mix_yld7)
+
+anova(mix_yld6, mix_yld7)
+summary(mix_yld6)
+summary(mix_yld7)
+```
+
+```{r}
+YLD_emm_kg <- emmeans(mix_yld7, ~ gen * fung_time * pressure)
+print(cld(YLD_emm_kg, alpha = 0.05, Letters = letters))
+```
+
+### Quality
+
+#### Total
+
+```{r}
+mix_yld  <- lmer(total ~ 1 + ( 1 | blk), data=CERC_IPM_data, REML=F)
+mix_yld1 <- lmer(total ~ gen + ( 1 | year / blk), data=CERC_IPM_data, REML=F)
+mix_yld2 <- lmer(total ~ gen * fung_time + ( 1 | year / blk), data=CERC_IPM_data, REML=F)
+mix_yld3 <- lmer(total ~ gen * pressure + ( 1 | year / blk), data=CERC_IPM_data, REML=F)
+mix_yld4 <- lmer(total ~ pressure * fung_time + ( 1 | year / blk), data=CERC_IPM_data, REML=F)
+mix_yld5 <- lmer(total ~ gen * fung_time * pressure + ( 1 | year/ blk), data=CERC_IPM_data, REML=F)
+mix_yld6 <- lmer(total ~ gen * fung_time * pressure + ( 1 | env / blk), data=CERC_IPM_data, REML=F)
+mix_yld7 <- lmer(total ~ gen * fung_time * pressure + ( 1 | year / env), data=CERC_IPM_data, REML=F)
+
+AIC(mix_yld, mix_yld1, mix_yld2, mix_yld3, mix_yld4, mix_yld5, mix_yld6, mix_yld7)
+BIC(mix_yld, mix_yld1, mix_yld2, mix_yld3, mix_yld4, mix_yld5, mix_yld6, mix_yld7)
+
+anova(mix_yld6, mix_yld7)
+summary(mix_yld6)
+summary(mix_yld7)
+```
+
+```{r}
+YLD_emm_total <- emmeans(mix_yld5, ~ gen * fung_time * pressure)
+print(cld(YLD_emm_total, alpha = 0.05, Letters = letters))
+```
+
+#### Head
+
+```{r}
+mix_yld  <- lmer(head ~ 1 + ( 1 | blk), data=CERC_IPM_data, REML=F)
+mix_yld1 <- lmer(head ~ gen + ( 1 | year / blk), data=CERC_IPM_data, REML=F)
+mix_yld2 <- lmer(head ~ gen * fung_time + ( 1 | year / blk), data=CERC_IPM_data, REML=F)
+mix_yld3 <- lmer(head ~ gen * pressure + ( 1 | year / blk), data=CERC_IPM_data, REML=F)
+mix_yld4 <- lmer(head ~ pressure * fung_time + ( 1 | year / blk), data=CERC_IPM_data, REML=F)
+mix_yld5 <- lmer(head ~ gen * fung_time * pressure + ( 1 | year/ blk), data=CERC_IPM_data, REML=F)
+mix_yld6 <- lmer(head ~ gen * fung_time * pressure + ( 1 | env / blk), data=CERC_IPM_data, REML=F)
+mix_yld7 <- lmer(head ~ gen * fung_time * pressure + ( 1 | year / env), data=CERC_IPM_data, REML=F)
+
+AIC(mix_yld, mix_yld1, mix_yld2, mix_yld3, mix_yld4, mix_yld5, mix_yld6, mix_yld7)
+BIC(mix_yld, mix_yld1, mix_yld2, mix_yld3, mix_yld4, mix_yld5, mix_yld6, mix_yld7)
+
+anova(mix_yld6, mix_yld7)
+summary(mix_yld6)
+summary(mix_yld7)
+```
+
+```{r}
+YLD_emm_head <- emmeans(mix_yld7, ~ gen * fung_time * pressure)
+print(cld(YLD_emm_head , alpha = 0.05, Letters = letters))
+```
+
+```{r}
+
+```
+
