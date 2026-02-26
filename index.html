@@ -4378,6 +4378,12 @@ window.onload = function() {
   <li><a href="#total" id="toc-total" class="nav-link" data-scroll-target="#total">Total</a></li>
   <li><a href="#head" id="toc-head" class="nav-link" data-scroll-target="#head">Head</a></li>
   </ul></li>
+  <li><a href="#disease" id="toc-disease" class="nav-link" data-scroll-target="#disease">Disease</a>
+  <ul>
+  <li><a href="#cpb" id="toc-cpb" class="nav-link" data-scroll-target="#cpb">CPB</a></li>
+  <li><a href="#nbls" id="toc-nbls" class="nav-link" data-scroll-target="#nbls">NBLS</a></li>
+  <li><a href="#number-of-lesion" id="toc-number-of-lesion" class="nav-link" data-scroll-target="#number-of-lesion">Number of lesion</a></li>
+  </ul></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -5374,6 +5380,690 @@ fixed-effect model matrix is rank deficient so dropping 4 columns / coefficients
                     
                     
                     
+
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+P value adjustment: tukey method for comparing a family of 44 estimates 
+significance level used: alpha = 0.05 
+NOTE: If two or more means share the same grouping symbol,
+      then we cannot show them to be different.
+      But we also did not show them to be the same. </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="disease" class="level3">
+<h3 class="anchored" data-anchor-id="disease">Disease</h3>
+<section id="cpb" class="level4">
+<h4 class="anchored" data-anchor-id="cpb">CPB</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>mix_yld  <span class="ot">&lt;-</span> <span class="fu">lmer</span>(CPB <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>mix_yld1 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(CPB <span class="sc">~</span> gen <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> year <span class="sc">/</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>mix_yld2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(CPB <span class="sc">~</span> gen <span class="sc">*</span> fung_time <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> year <span class="sc">/</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>mix_yld3 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(CPB <span class="sc">~</span> gen <span class="sc">*</span> pressure <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> year <span class="sc">/</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>mix_yld4 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(CPB <span class="sc">~</span> pressure <span class="sc">*</span> fung_time <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> year <span class="sc">/</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>mix_yld5 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(CPB <span class="sc">~</span> gen <span class="sc">*</span> fung_time <span class="sc">*</span> pressure <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> year<span class="sc">/</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>mix_yld6 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(CPB <span class="sc">~</span> gen <span class="sc">*</span> fung_time <span class="sc">*</span> pressure <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> env <span class="sc">/</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>mix_yld7 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(CPB <span class="sc">~</span> gen <span class="sc">*</span> fung_time <span class="sc">*</span> pressure <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> year <span class="sc">/</span> env), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(mix_yld, mix_yld1, mix_yld2, mix_yld3, mix_yld4, mix_yld5, mix_yld6, mix_yld7)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"1690.024","_rn_":"mix_yld"},{"1":"11","2":"1175.894","_rn_":"mix_yld1"},{"1":"27","2":"1199.093","_rn_":"mix_yld2"},{"1":"19","2":"1171.258","_rn_":"mix_yld3"},{"1":"9","2":"1193.375","_rn_":"mix_yld4"},{"1":"47","2":"1210.649","_rn_":"mix_yld5"},{"1":"47","2":"1259.448","_rn_":"mix_yld6"},{"1":"47","2":"1067.820","_rn_":"mix_yld7"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(mix_yld, mix_yld1, mix_yld2, mix_yld3, mix_yld4, mix_yld5, mix_yld6, mix_yld7)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"1702.848","_rn_":"mix_yld"},{"1":"11","2":"1222.916","_rn_":"mix_yld1"},{"1":"27","2":"1314.512","_rn_":"mix_yld2"},{"1":"19","2":"1252.478","_rn_":"mix_yld3"},{"1":"9","2":"1231.848","_rn_":"mix_yld4"},{"1":"47","2":"1411.562","_rn_":"mix_yld5"},{"1":"47","2":"1460.362","_rn_":"mix_yld6"},{"1":"47","2":"1268.733","_rn_":"mix_yld7"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mix_yld6, mix_yld7)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["npar"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["logLik"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["-2*log(L)"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Chisq"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Df"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chisq)"],"name":[8],"type":["lgl"],"align":["right"]}],"data":[{"1":"47","2":"1259.448","3":"1460.362","4":"-582.7240","5":"1165.4481","6":"NA","7":"NA","8":"NA","_rn_":"mix_yld6"},{"1":"47","2":"1067.820","3":"1268.733","4":"-486.9098","5":"973.8196","6":"191.6285","7":"0","8":"NA","_rn_":"mix_yld7"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mix_yld6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by maximum likelihood  [&#39;lmerMod&#39;]
+Formula: CPB ~ gen * fung_time * pressure + (1 | env/blk)
+   Data: CERC_IPM_data
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+   1259.4    1460.4    -582.7    1165.4       484 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.3122 -0.3853  0.0000  0.3902  4.2444 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ blk:env  (Intercept) 0.0000   0.0000  
+ env      (Intercept) 0.0486   0.2205  
+ Residual             0.5156   0.7181  
+Number of obs: 531, groups:  blk:env, 31; env, 4
+
+Fixed effects:
+                                       Estimate Std. Error t value
+(Intercept)                             1.28656    0.22846   5.632
+genCLJ01                                0.79704    0.27237   2.926
+genCLL17                               -1.28303    0.54589  -2.350
+genCLL19                                0.38073    0.27237   1.398
+genDG263L                               0.42785    0.27693   1.545
+genJupiter                              1.16755    0.28214   4.138
+genPresidio                            -0.98463    0.74738  -1.317
+genPVL03                                0.50233    0.25870   1.942
+fung_timeEarly                          0.73175    0.30219   2.421
+fung_timeLate                           0.52104    0.30219   1.724
+pressurelow                            -1.22347    0.27424  -4.461
+genCLJ01:fung_timeEarly                -0.91654    0.40660  -2.254
+genCLL17:fung_timeEarly                 0.08977    0.37688   0.238
+genCLL19:fung_timeEarly                -0.66973    0.41538  -1.612
+genDG263L:fung_timeEarly               -1.02679    0.40320  -2.547
+genJupiter:fung_timeEarly              -0.89339    0.41704  -2.142
+genPresidio:fung_timeEarly             -0.73175    1.05953  -0.691
+genPVL03:fung_timeEarly                -1.14702    0.37815  -3.033
+genCLJ01:fung_timeLate                 -0.64976    0.40660  -1.598
+genCLL17:fung_timeLate                 -0.22264    0.93064  -0.239
+genCLL19:fung_timeLate                 -0.76799    0.40660  -1.889
+genDG263L:fung_timeLate                -0.66737    0.40059  -1.666
+genJupiter:fung_timeLate               -0.51647    0.41310  -1.250
+genPresidio:fung_timeLate               0.11174    0.39146   0.285
+genPVL03:fung_timeLate                 -0.77432    0.37977  -2.039
+genCLJ01:pressurelow                   -0.83878    0.38124  -2.200
+genCLL17:pressurelow                    1.19326    0.61280   1.947
+genCLL19:pressurelow                   -0.42168    0.38493  -1.095
+genDG263L:pressurelow                   1.14758    0.46541   2.466
+genJupiter:pressurelow                  3.38249    0.80394   4.207
+genPresidio:pressurelow                 0.88202    0.79256   1.113
+genPVL03:pressurelow                   -0.58555    0.36849  -1.589
+fung_timeEarly:pressurelow             -0.81302    0.39747  -2.046
+fung_timeLate:pressurelow              -0.61562    0.41662  -1.478
+genCLJ01:fung_timeEarly:pressurelow     0.95828    0.54859   1.747
+genCLL19:fung_timeEarly:pressurelow     0.84863    0.55601   1.526
+genDG263L:fung_timeEarly:pressurelow    0.19542    0.67955   0.288
+genPresidio:fung_timeEarly:pressurelow  0.80941    1.12271   0.721
+genPVL03:fung_timeEarly:pressurelow     1.14283    0.54953   2.080
+genCLJ01:fung_timeLate:pressurelow      0.69806    0.56846   1.228
+genCLL17:fung_timeLate:pressurelow      0.30076    1.01394   0.297
+genCLL19:fung_timeLate:pressurelow      0.82030    0.56682   1.447
+genDG263L:fung_timeLate:pressurelow     0.37569    0.72106   0.521
+genPVL03:fung_timeLate:pressurelow      0.85795    0.53925   1.591</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>fit warnings:
+fixed-effect model matrix is rank deficient so dropping 4 columns / coefficients
+optimizer (nloptwrap) convergence code: 0 (OK)
+boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mix_yld7)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by maximum likelihood  [&#39;lmerMod&#39;]
+Formula: CPB ~ gen * fung_time * pressure + (1 | year/env)
+   Data: CERC_IPM_data
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+   1067.8    1268.7    -486.9     973.8       484 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.1085 -0.1779 -0.0134  0.0660  5.9488 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ env:year (Intercept) 0.1831   0.4279  
+ year     (Intercept) 0.4875   0.6982  
+ Residual             0.3401   0.5832  
+Number of obs: 531, groups:  env:year, 10; year, 3
+
+Fixed effects:
+                                         Estimate Std. Error t value
+(Intercept)                             1.0522025  0.4564617   2.305
+genCLJ01                                0.6893626  0.2237248   3.081
+genCLL17                               -0.0506160  0.4584857  -0.110
+genCLL19                                0.2730559  0.2237248   1.220
+genDG263L                               0.0550465  0.2355196   0.234
+genJupiter                              0.8053605  0.2353265   3.422
+genPresidio                            -0.0664531  0.6198288  -0.107
+genPVL03                                0.1998391  0.2196980   0.910
+fung_timeEarly                          0.2156480  0.2507914   0.860
+fung_timeLate                           0.0049321  0.2507914   0.020
+pressurelow                            -0.0771987  0.2472639  -0.312
+genCLJ01:fung_timeEarly                -0.6549413  0.3315868  -1.975
+genCLL17:fung_timeEarly                -0.0186000  0.3063493  -0.061
+genCLL19:fung_timeEarly                -0.3374993  0.3387269  -0.996
+genDG263L:fung_timeEarly               -0.5414450  0.3314487  -1.634
+genJupiter:fung_timeEarly              -0.3379554  0.3426501  -0.986
+genPresidio:fung_timeEarly             -0.2156480  0.8620032  -0.250
+genPVL03:fung_timeEarly                -0.5146568  0.3144512  -1.637
+genCLJ01:fung_timeLate                 -0.3881693  0.3315868  -1.171
+genCLL17:fung_timeLate                 -0.0207692  0.7586842  -0.027
+genCLL19:fung_timeLate                 -0.5063960  0.3315868  -1.527
+genDG263L:fung_timeLate                -0.1487412  0.3293902  -0.452
+genJupiter:fung_timeLate               -0.0003689  0.3394346  -0.001
+genPresidio:fung_timeLate              -0.0216416  0.3182927  -0.068
+genPVL03:fung_timeLate                 -0.1971797  0.3141927  -0.628
+genCLJ01:pressurelow                   -0.6741960  0.3128418  -2.155
+genCLL17:pressurelow                    0.0692160  0.5085999   0.136
+genCLL19:pressurelow                   -0.2575229  0.3158526  -0.815
+genDG263L:pressurelow                   0.2685081  0.3969363   0.676
+genJupiter:pressurelow                  1.1089949  0.6762153   1.640
+genPresidio:pressurelow                 0.0855482  0.6539945   0.131
+genPVL03:pressurelow                   -0.1807212  0.3081842  -0.586
+fung_timeEarly:pressurelow             -0.1970748  0.3290168  -0.599
+fung_timeLate:pressurelow               0.0173549  0.3447287   0.050
+genCLJ01:fung_timeEarly:pressurelow     0.6397747  0.4475776   1.429
+genCLL19:fung_timeEarly:pressurelow     0.2271937  0.4557481   0.499
+genDG263L:fung_timeEarly:pressurelow   -0.2076390  0.5559208  -0.374
+genPresidio:fung_timeEarly:pressurelow  0.1976956  0.9139704   0.216
+genPVL03:fung_timeEarly:pressurelow     0.5018172  0.4534529   1.107
+genCLJ01:fung_timeLate:pressurelow      0.3711744  0.4637358   0.800
+genCLL17:fung_timeLate:pressurelow     -0.0004018  0.8273147   0.000
+genCLL19:fung_timeLate:pressurelow      0.4876940  0.4625492   1.054
+genDG263L:fung_timeLate:pressurelow    -0.0951176  0.5909966  -0.161
+genPVL03:fung_timeLate:pressurelow      0.1734213  0.4445245   0.390</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>fit warnings:
+fixed-effect model matrix is rank deficient so dropping 4 columns / coefficients</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>YLD_emm_CPB <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(mix_yld7, <span class="sc">~</span> gen <span class="sc">*</span> fung_time <span class="sc">*</span> pressure)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">cld</span>(YLD_emm_CPB , <span class="at">alpha =</span> <span class="fl">0.05</span>, <span class="at">Letters =</span> letters))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> gen      fung_time pressure emmean    SE    df lower.CL upper.CL .group
+ DG263L   Early     low       0.568 0.616 10.32 -0.79769     1.93  abcd 
+ DG263L   Early     high      0.781 0.555  5.98 -0.57677     2.14  a    
+ CLL19    Late      high      0.824 0.558  6.20 -0.53164     2.18  ab   
+ CLL19    Early     low       0.899 0.558  6.11 -0.46074     2.26  abcd 
+ PVL03    Early     high      0.953 0.546  5.51 -0.41300     2.32  abc  
+ DG263L   Late      high      0.963 0.553  5.90 -0.39591     2.32  abcd 
+ Cheniere Check     low       0.975 0.563  6.39 -0.38232     2.33  abcd 
+ CLL17    Late      high      0.986 0.818 38.80 -0.66886     2.64  abcd 
+ Presidio Early     high      0.986 0.818 38.80 -0.66886     2.64  abcd 
+ Presidio Check     high      0.986 0.818 38.80 -0.66886     2.64  abcd 
+ CLJ01    Check     low       0.990 0.567  6.60 -0.36620     2.35  abcd 
+ CLL19    Check     low       0.991 0.568  6.71 -0.36519     2.35  abcd 
+ PVL03    Late      low       0.993 0.562  6.29 -0.36619     2.35  abcd 
+ Cheniere Early     low       0.994 0.563  6.41 -0.36417     2.35  abcd 
+ CLL17    Early     low       0.994 0.563  6.41 -0.36417     2.35  abcd 
+ CLJ01    Early     low       0.994 0.563  6.41 -0.36417     2.35  abcd 
+ CLL17    Check     low       0.994 0.570  6.84 -0.36148     2.35  abcd 
+ Presidio Check     low       0.994 0.565  6.50 -0.36295     2.35  abcd 
+ CLL19    Late      low       0.994 0.565  6.49 -0.36298     2.35  abcd 
+ PVL03    Check     low       0.994 0.565  6.49 -0.36298     2.35  abcd 
+ Presidio Early     low       0.995 0.566  6.59 -0.36167     2.35  abcd 
+ CLL17    Late      low       0.995 0.566  6.59 -0.36167     2.35  abcd 
+ Presidio Late      low       0.995 0.566  6.58 -0.36167     2.35  abcd 
+ CLJ01    Late      low       0.995 0.568  6.69 -0.36026     2.35  abcd 
+ Cheniere Late      low       0.997 0.573  7.00 -0.35711     2.35  abcd 
+ PVL03    Early     low       1.000 0.580  7.46 -0.35396     2.35  abcd 
+ CLL17    Check     high      1.002 0.693 18.20 -0.45240     2.46  abcd 
+ Cheniere Check     high      1.052 0.555  6.03 -0.30505     2.41  abcd 
+ Cheniere Late      high      1.057 0.566  6.70 -0.29441     2.41  abcd 
+ PVL03    Late      high      1.060 0.548  5.59 -0.30469     2.42  abcd 
+ DG263L   Late      low       1.077 0.642 12.79 -0.31336     2.47  abcd 
+ DG263L   Check     high      1.107 0.556  6.07 -0.24974     2.46  abcd 
+ CLL19    Early     high      1.203 0.563  6.49 -0.14951     2.56  abcd 
+ PVL03    Check     high      1.252 0.549  5.68 -0.11073     2.61  abcd 
+ Cheniere Early     high      1.268 0.566  6.70 -0.08369     2.62  abcd 
+ DG263L   Check     low       1.299 0.599  8.98 -0.05681     2.65  abcd 
+ CLJ01    Early     high      1.302 0.558  6.20 -0.05317     2.66  abcd 
+ CLL19    Check     high      1.325 0.553  5.89 -0.03392     2.68  abcd 
+ CLJ01    Late      high      1.358 0.558  6.20  0.00289     2.71  abcd 
+ Jupiter  Early     high      1.735 0.560  6.33  0.38107     3.09   bcd 
+ CLJ01    Check     high      1.742 0.553  5.89  0.38239     3.10    cd 
+ Jupiter  Check     high      1.858 0.558  6.20  0.50213     3.21     d 
+ Jupiter  Late      high      1.862 0.558  6.20  0.50669     3.22     d 
+ Jupiter  Early     low       2.570 0.811 37.72  0.92792     4.21  abcd 
+ CLL17    Early     high     nonEst    NA    NA       NA       NA       
+ Presidio Late      high     nonEst    NA    NA       NA       NA       
+ Jupiter  Check     low      nonEst    NA    NA       NA       NA       
+ Jupiter  Late      low      nonEst    NA    NA       NA       NA       
+
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+P value adjustment: tukey method for comparing a family of 44 estimates 
+significance level used: alpha = 0.05 
+NOTE: If two or more means share the same grouping symbol,
+      then we cannot show them to be different.
+      But we also did not show them to be the same. </code></pre>
+</div>
+</div>
+</section>
+<section id="nbls" class="level4">
+<h4 class="anchored" data-anchor-id="nbls">NBLS</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>mix_yld  <span class="ot">&lt;-</span> <span class="fu">lmer</span>(NBLS <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>mix_yld1 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(NBLS <span class="sc">~</span> gen <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> year <span class="sc">/</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>mix_yld2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(NBLS <span class="sc">~</span> gen <span class="sc">*</span> fung_time <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> year <span class="sc">/</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>mix_yld3 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(NBLS <span class="sc">~</span> gen <span class="sc">*</span> pressure <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> year <span class="sc">/</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>mix_yld4 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(NBLS <span class="sc">~</span> pressure <span class="sc">*</span> fung_time <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> year <span class="sc">/</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>mix_yld5 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(NBLS <span class="sc">~</span> gen <span class="sc">*</span> fung_time <span class="sc">*</span> pressure <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> year<span class="sc">/</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>mix_yld6 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(NBLS <span class="sc">~</span> gen <span class="sc">*</span> fung_time <span class="sc">*</span> pressure <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> env <span class="sc">/</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>mix_yld7 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(NBLS <span class="sc">~</span> gen <span class="sc">*</span> fung_time <span class="sc">*</span> pressure <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> year <span class="sc">/</span> env), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(mix_yld, mix_yld1, mix_yld2, mix_yld3, mix_yld4, mix_yld5, mix_yld6, mix_yld7)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"457.4024","_rn_":"mix_yld"},{"1":"9","2":"458.8531","_rn_":"mix_yld1"},{"1":"21","2":"472.7274","_rn_":"mix_yld2"},{"1":"12","2":"464.4026","_rn_":"mix_yld3"},{"1":"9","2":"468.3062","_rn_":"mix_yld4"},{"1":"26","2":"481.3055","_rn_":"mix_yld5"},{"1":"26","2":"463.6556","_rn_":"mix_yld6"},{"1":"26","2":"407.9660","_rn_":"mix_yld7"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(mix_yld, mix_yld1, mix_yld2, mix_yld3, mix_yld4, mix_yld5, mix_yld6, mix_yld7)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"467.1276","_rn_":"mix_yld"},{"1":"9","2":"488.0288","_rn_":"mix_yld1"},{"1":"21","2":"540.8041","_rn_":"mix_yld2"},{"1":"12","2":"503.3036","_rn_":"mix_yld3"},{"1":"9","2":"497.4819","_rn_":"mix_yld4"},{"1":"26","2":"565.5909","_rn_":"mix_yld5"},{"1":"26","2":"547.9410","_rn_":"mix_yld6"},{"1":"26","2":"492.2514","_rn_":"mix_yld7"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mix_yld6, mix_yld7)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["npar"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["logLik"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["-2*log(L)"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Chisq"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Df"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chisq)"],"name":[8],"type":["lgl"],"align":["right"]}],"data":[{"1":"26","2":"463.6556","3":"547.9410","4":"-205.8278","5":"411.6556","6":"NA","7":"NA","8":"NA","_rn_":"mix_yld6"},{"1":"26","2":"407.9660","3":"492.2514","4":"-177.9830","5":"355.9660","6":"55.68956","7":"0","8":"NA","_rn_":"mix_yld7"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mix_yld6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by maximum likelihood  [&#39;lmerMod&#39;]
+Formula: NBLS ~ gen * fung_time * pressure + (1 | env/blk)
+   Data: CERC_IPM_data
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+    463.7     547.9    -205.8     411.7       163 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.8987 -0.6515 -0.0696  0.4023  4.8489 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ blk:env  (Intercept) 0.00000  0.0000  
+ env      (Intercept) 0.08063  0.2840  
+ Residual             0.49886  0.7063  
+Number of obs: 189, groups:  blk:env, 9; env, 3
+
+Fixed effects:
+                           Estimate Std. Error t value
+(Intercept)                 1.13981    0.36026   3.164
+genCLJ01                   -0.38761    0.39402  -0.984
+genCLL19                    0.05683    0.39402   0.144
+genDG263L                   0.06184    0.38215   0.162
+genJupiter                 -0.05428    0.39402  -0.138
+genPVL03                   -0.05132    0.36638  -0.140
+fung_timeEarly             -0.25191    0.42783  -0.589
+fung_timeLate              -0.25191    0.42783  -0.589
+pressurelow                -0.51148    0.77656  -0.659
+genCLJ01:fung_timeEarly     0.36302    0.54212   0.670
+genCLL19:fung_timeEarly    -0.24194    0.54840  -0.441
+genDG263L:fung_timeEarly   -0.02081    0.52320  -0.040
+genJupiter:fung_timeEarly   0.02969    0.54212   0.055
+genPVL03:fung_timeEarly     0.65191    0.49955   1.305
+genCLJ01:fung_timeLate     -0.19253    0.54212  -0.355
+genCLL19:fung_timeLate     -0.08142    0.54212  -0.150
+genDG263L:fung_timeLate     0.25379    0.51967   0.488
+genJupiter:fung_timeLate    0.58525    0.54212   1.080
+genPVL03:fung_timeLate      0.25191    0.49955   0.504
+genCLL19:pressurelow        0.68343    1.22948   0.556
+genDG263L:pressurelow       0.08713    0.87688   0.099
+fung_timeEarly:pressurelow  0.27273    0.58321   0.468
+fung_timeLate:pressurelow  -0.48418    0.61712  -0.785</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>fit warnings:
+fixed-effect model matrix is rank deficient so dropping 13 columns / coefficients
+optimizer (nloptwrap) convergence code: 0 (OK)
+boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mix_yld7)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by maximum likelihood  [&#39;lmerMod&#39;]
+Formula: NBLS ~ gen * fung_time * pressure + (1 | year/env)
+   Data: CERC_IPM_data
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+    408.0     492.3    -178.0     356.0       163 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.4437 -0.5267  0.0348  0.4919  4.3790 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ env:year (Intercept) 0.4493   0.6703  
+ year     (Intercept) 0.0000   0.0000  
+ Residual             0.3483   0.5901  
+Number of obs: 189, groups:  env:year, 5; year, 2
+
+Fixed effects:
+                             Estimate Std. Error t value
+(Intercept)                 1.4395363  0.4044681   3.559
+genCLJ01                   -0.3328259  0.3313106  -1.005
+genCLL19                    0.1116185  0.3313106   0.337
+genDG263L                  -0.3519867  0.3274169  -1.075
+genJupiter                  0.0005074  0.3313106   0.002
+genPVL03                   -0.3062030  0.3113585  -0.983
+fung_timeEarly             -0.2001998  0.3575430  -0.560
+fung_timeLate              -0.2001998  0.3575430  -0.560
+pressurelow                -0.2011989  0.6504593  -0.309
+genCLJ01:fung_timeEarly     0.3113109  0.4530193   0.687
+genCLL19:fung_timeEarly    -0.2609478  0.4582166  -0.569
+genDG263L:fung_timeEarly   -0.0725275  0.4372135  -0.166
+genJupiter:fung_timeEarly  -0.0220224  0.4530193  -0.049
+genPVL03:fung_timeEarly     0.6001998  0.4174574   1.438
+genCLJ01:fung_timeLate     -0.2442446  0.4530193  -0.539
+genCLL19:fung_timeLate     -0.1331335  0.4530193  -0.294
+genDG263L:fung_timeLate     0.2197325  0.4342772   0.506
+genJupiter:fung_timeLate    0.5335331  0.4530193   1.178
+genPVL03:fung_timeLate      0.2001998  0.4174574   0.480
+genCLL19:pressurelow        0.0787999  1.0332711   0.076
+genDG263L:pressurelow       0.3728878  0.7348215   0.507
+fung_timeEarly:pressurelow  0.2727273  0.4872834   0.560
+fung_timeLate:pressurelow  -0.3737671  0.5163376  -0.724</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>fit warnings:
+fixed-effect model matrix is rank deficient so dropping 13 columns / coefficients
+optimizer (nloptwrap) convergence code: 0 (OK)
+boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>YLD_emm_NBLS <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(mix_yld7, <span class="sc">~</span> gen <span class="sc">*</span> fung_time <span class="sc">*</span> pressure)</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">cld</span>(YLD_emm_NBLS , <span class="at">alpha =</span> <span class="fl">0.05</span>, <span class="at">Letters =</span> letters))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> gen      fung_time pressure emmean    SE    df lower.CL upper.CL .group
+ CLJ01    Late      high      0.662 0.427  2.75 -0.77048     2.10  a    
+ DG263L   Early     high      0.815 0.421  2.32 -0.77466     2.40  ab   
+ DG263L   Late      low       0.905 0.524  7.33 -0.32264     2.13  ab   
+ DG263L   Check     high      1.088 0.421  2.32 -0.50193     2.68  ab   
+ CLL19    Early     high      1.090 0.434  2.95 -0.30272     2.48  ab   
+ CLJ01    Check     high      1.107 0.427  2.75 -0.32604     2.54  ab   
+ DG263L   Late      high      1.107 0.418  2.22 -0.53039     2.74  ab   
+ PVL03    Check     high      1.133 0.407  2.01 -0.61171     2.88  ab   
+ PVL03    Late      high      1.133 0.407  2.01 -0.61171     2.88  ab   
+ CLJ01    Early     high      1.218 0.427  2.75 -0.21493     2.65  ab   
+ Jupiter  Early     high      1.218 0.427  2.75 -0.21493     2.65  ab   
+ CLL19    Late      high      1.218 0.427  2.75 -0.21493     2.65  ab   
+ Cheniere Check     low       1.238 0.734 29.36 -0.26125     2.74  ab   
+ Cheniere Late      high      1.239 0.452  3.71 -0.05400     2.53  ab   
+ Cheniere Early     high      1.239 0.452  3.71 -0.05400     2.53  ab   
+ CLL19    Early     low       1.240 0.733 29.11 -0.25890     2.74  ab   
+ DG263L   Early     low       1.259 0.489  5.20  0.01547     2.50  ab   
+ DG263L   Check     low       1.259 0.489  5.20  0.01547     2.50  ab   
+ Cheniere Check     high      1.440 0.466  4.30  0.17963     2.70  ab   
+ Jupiter  Check     high      1.440 0.427  2.75  0.00729     2.87  ab   
+ PVL03    Early     high      1.533 0.407  2.01 -0.21171     3.28  ab   
+ CLL19    Check     high      1.551 0.427  2.75  0.11840     2.98  ab   
+ Jupiter  Late      high      1.773 0.427  2.75  0.34063     3.21   b   
+ CLJ01    Check     low      nonEst    NA    NA       NA       NA       
+ CLL19    Check     low      nonEst    NA    NA       NA       NA       
+ Jupiter  Check     low      nonEst    NA    NA       NA       NA       
+ PVL03    Check     low      nonEst    NA    NA       NA       NA       
+ Cheniere Early     low      nonEst    NA    NA       NA       NA       
+ CLJ01    Early     low      nonEst    NA    NA       NA       NA       
+ Jupiter  Early     low      nonEst    NA    NA       NA       NA       
+ PVL03    Early     low      nonEst    NA    NA       NA       NA       
+ Cheniere Late      low      nonEst    NA    NA       NA       NA       
+ CLJ01    Late      low      nonEst    NA    NA       NA       NA       
+ CLL19    Late      low      nonEst    NA    NA       NA       NA       
+ Jupiter  Late      low      nonEst    NA    NA       NA       NA       
+ PVL03    Late      low      nonEst    NA    NA       NA       NA       
+
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+P value adjustment: tukey method for comparing a family of 23 estimates 
+significance level used: alpha = 0.05 
+NOTE: If two or more means share the same grouping symbol,
+      then we cannot show them to be different.
+      But we also did not show them to be the same. </code></pre>
+</div>
+</div>
+</section>
+<section id="number-of-lesion" class="level4">
+<h4 class="anchored" data-anchor-id="number-of-lesion">Number of lesion</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>mix_yld  <span class="ot">&lt;-</span> <span class="fu">lmer</span>(n_lesion <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>mix_yld1 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(n_lesion <span class="sc">~</span> gen <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> year <span class="sc">/</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>mix_yld2 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(n_lesion <span class="sc">~</span> gen <span class="sc">*</span> fung_time <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> year <span class="sc">/</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>mix_yld3 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(n_lesion <span class="sc">~</span> gen <span class="sc">*</span> pressure <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> year <span class="sc">/</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>mix_yld4 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(n_lesion <span class="sc">~</span> pressure <span class="sc">*</span> fung_time <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> year <span class="sc">/</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a>mix_yld5 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(n_lesion <span class="sc">~</span> gen <span class="sc">*</span> fung_time <span class="sc">*</span> pressure <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> year<span class="sc">/</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a>mix_yld6 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(n_lesion <span class="sc">~</span> gen <span class="sc">*</span> fung_time <span class="sc">*</span> pressure <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> env <span class="sc">/</span> blk), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb70-8"><a href="#cb70-8" aria-hidden="true" tabindex="-1"></a>mix_yld7 <span class="ot">&lt;-</span> <span class="fu">lmer</span>(n_lesion <span class="sc">~</span> gen <span class="sc">*</span> fung_time <span class="sc">*</span> pressure <span class="sc">+</span> ( <span class="dv">1</span> <span class="sc">|</span> year <span class="sc">/</span> env), <span class="at">data=</span>CERC_IPM_data, <span class="at">REML=</span>F)</span>
+<span id="cb70-9"><a href="#cb70-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-10"><a href="#cb70-10" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(mix_yld, mix_yld1, mix_yld2, mix_yld3, mix_yld4, mix_yld5, mix_yld6, mix_yld7)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"4328.378","_rn_":"mix_yld"},{"1":"11","2":"3627.072","_rn_":"mix_yld1"},{"1":"27","2":"3635.985","_rn_":"mix_yld2"},{"1":"19","2":"3393.652","_rn_":"mix_yld3"},{"1":"9","2":"3472.731","_rn_":"mix_yld4"},{"1":"47","2":"3423.416","_rn_":"mix_yld5"},{"1":"47","2":"3457.126","_rn_":"mix_yld6"},{"1":"47","2":"3421.605","_rn_":"mix_yld7"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(mix_yld, mix_yld1, mix_yld2, mix_yld3, mix_yld4, mix_yld5, mix_yld6, mix_yld7)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["df"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"4341.202","_rn_":"mix_yld"},{"1":"11","2":"3674.095","_rn_":"mix_yld1"},{"1":"27","2":"3751.404","_rn_":"mix_yld2"},{"1":"19","2":"3474.872","_rn_":"mix_yld3"},{"1":"9","2":"3511.204","_rn_":"mix_yld4"},{"1":"47","2":"3624.330","_rn_":"mix_yld5"},{"1":"47","2":"3658.040","_rn_":"mix_yld6"},{"1":"47","2":"3622.519","_rn_":"mix_yld7"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(mix_yld6, mix_yld7)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["npar"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["AIC"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["BIC"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["logLik"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["-2*log(L)"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Chisq"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Df"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Pr(>Chisq)"],"name":[8],"type":["lgl"],"align":["right"]}],"data":[{"1":"47","2":"3457.126","3":"3658.040","4":"-1681.563","5":"3363.126","6":"NA","7":"NA","8":"NA","_rn_":"mix_yld6"},{"1":"47","2":"3421.605","3":"3622.519","4":"-1663.803","5":"3327.605","6":"35.52084","7":"0","8":"NA","_rn_":"mix_yld7"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mix_yld6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by maximum likelihood  [&#39;lmerMod&#39;]
+Formula: n_lesion ~ gen * fung_time * pressure + (1 | env/blk)
+   Data: CERC_IPM_data
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+   3457.1    3658.0   -1681.6    3363.1       484 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.5145 -0.6848  0.0739  0.6801  3.0320 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ blk:env  (Intercept) 16.6454  4.0799  
+ env      (Intercept)  0.3337  0.5776  
+ Residual             29.5976  5.4404  
+Number of obs: 531, groups:  blk:env, 31; env, 4
+
+Fixed effects:
+                                       Estimate Std. Error t value
+(Intercept)                             43.1950     1.7740  24.349
+genCLJ01                                 1.8719     2.0732   0.903
+genCLL17                                -8.9922     4.1691  -2.157
+genCLL19                                 1.2053     2.0732   0.581
+genDG263L                                0.4251     2.1101   0.201
+genJupiter                               0.2056     2.1480   0.096
+genPresidio                             -8.8524     5.6981  -1.554
+genPVL03                                 1.4879     1.9706   0.755
+fung_timeEarly                          -1.2544     2.2988  -0.546
+fung_timeLate                            1.7456     2.2988   0.759
+pressurelow                            -16.1162     2.1720  -7.420
+genCLJ01:fung_timeEarly                  1.2035     3.0868   0.390
+genCLL17:fung_timeEarly                  3.9305     3.0925   1.271
+genCLL19:fung_timeEarly                  1.5825     3.1543   0.502
+genDG263L:fung_timeEarly                -0.1546     3.0628  -0.050
+genJupiter:fung_timeEarly                2.6786     3.1663   0.846
+genPresidio:fung_timeEarly               2.0074     8.1112   0.247
+genPVL03:fung_timeEarly                  0.3054     2.8735   0.106
+genCLJ01:fung_timeLate                  -1.7965     3.0868  -0.582
+genCLL17:fung_timeLate                  -3.8527     7.0700  -0.545
+genCLL19:fung_timeLate                  -0.2068     3.0868  -0.067
+genDG263L:fung_timeLate                 -3.2109     3.0438  -1.055
+genJupiter:fung_timeLate                -1.7456     3.1366  -0.557
+genPresidio:fung_timeLate                6.6331     3.0872   2.149
+genPVL03:fung_timeLate                  -2.7750     2.8849  -0.962
+genCLJ01:pressurelow                    -6.0490     2.9302  -2.064
+genCLL17:pressurelow                    -3.9505     4.7594  -0.830
+genCLL19:pressurelow                    -9.9936     3.0268  -3.302
+genDG263L:pressurelow                   -6.2450     3.5954  -1.737
+genJupiter:pressurelow                   1.9083     6.1657   0.310
+genPresidio:pressurelow                 -5.5167     6.0851  -0.907
+genPVL03:pressurelow                   -11.4502     2.9104  -3.934
+fung_timeEarly:pressurelow              -4.3072     3.1325  -1.375
+fung_timeLate:pressurelow               -8.4113     3.2173  -2.614
+genCLJ01:fung_timeEarly:pressurelow      0.3589     4.2014   0.085
+genCLL19:fung_timeEarly:pressurelow      4.1058     4.3433   0.945
+genDG263L:fung_timeEarly:pressurelow     8.1593     5.2270   1.561
+genPresidio:fung_timeEarly:pressurelow   3.3880     8.6609   0.391
+genPVL03:fung_timeEarly:pressurelow      5.5958     4.2842   1.306
+genCLJ01:fung_timeLate:pressurelow       4.8952     4.3425   1.127
+genCLL17:fung_timeLate:pressurelow       7.9581     7.7612   1.025
+genCLL19:fung_timeLate:pressurelow       5.9879     4.3868   1.365
+genDG263L:fung_timeLate:pressurelow      2.7839     5.5093   0.505
+genPVL03:fung_timeLate:pressurelow       8.1774     4.2209   1.937</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>fit warnings:
+fixed-effect model matrix is rank deficient so dropping 4 columns / coefficients</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mix_yld7)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed model fit by maximum likelihood  [&#39;lmerMod&#39;]
+Formula: n_lesion ~ gen * fung_time * pressure + (1 | year/env)
+   Data: CERC_IPM_data
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+   3421.6    3622.5   -1663.8    3327.6       484 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.2811 -0.6126  0.0841  0.5958  3.6217 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ env:year (Intercept)  6.84    2.615   
+ year     (Intercept) 15.89    3.986   
+ Residual             29.07    5.392   
+Number of obs: 531, groups:  env:year, 10; year, 3
+
+Fixed effects:
+                                        Estimate Std. Error t value
+(Intercept)                             44.00982    2.88392  15.260
+genCLJ01                                 0.68437    2.06719   0.331
+genCLL17                                -2.79287    4.23210  -0.660
+genCLL19                                 0.01770    2.06719   0.009
+genDG263L                               -2.24174    2.17255  -1.032
+genJupiter                              -2.51682    2.17260  -1.158
+genPresidio                             -6.57784    5.72431  -1.149
+genPVL03                                -0.59685    2.02654  -0.295
+fung_timeEarly                          -3.58847    2.31618  -1.549
+fung_timeLate                           -0.58847    2.31618  -0.254
+pressurelow                            -13.10136    2.27399  -5.761
+genCLJ01:fung_timeEarly                  2.00266    3.06505   0.653
+genCLL17:fung_timeEarly                  0.22210    2.83218   0.078
+genCLL19:fung_timeEarly                  2.23582    3.13110   0.714
+genDG263L:fung_timeEarly                 2.13987    3.06246   0.699
+genJupiter:fung_timeEarly                4.87630    3.16616   1.540
+genPresidio:fung_timeEarly               4.58847    7.96896   0.576
+genPVL03:fung_timeEarly                  3.06647    2.90377   1.056
+genCLJ01:fung_timeLate                  -0.99734    3.06505  -0.325
+genCLL17:fung_timeLate                  -5.19650    7.01297  -0.741
+genCLL19:fung_timeLate                   0.59241    3.06505   0.193
+genDG263L:fung_timeLate                 -0.70284    3.04340  -0.231
+genJupiter:fung_timeLate                 0.58847    3.13639   0.188
+genPresidio:fung_timeLate                2.25576    2.94241   0.767
+genPVL03:fung_timeLate                  -0.21058    2.90215  -0.073
+genCLJ01:pressurelow                    -4.01413    2.89081  -1.389
+genCLL17:pressurelow                    -6.42923    4.69718  -1.369
+genCLL19:pressurelow                    -5.62739    2.91866  -1.928
+genDG263L:pressurelow                   -7.04806    3.66084  -1.925
+genJupiter:pressurelow                  -4.45199    6.24108  -0.713
+genPresidio:pressurelow                 -3.35238    6.04117  -0.555
+genPVL03:pressurelow                    -5.31908    2.84496  -1.870
+fung_timeEarly:pressurelow               0.81161    3.03912   0.267
+fung_timeLate:pressurelow               -2.95480    3.18421  -0.928
+genCLJ01:fung_timeEarly:pressurelow     -1.61040    4.13716  -0.389
+genCLL19:fung_timeEarly:pressurelow      0.29364    4.21173   0.070
+genDG263L:fung_timeEarly:pressurelow     3.78188    5.13773   0.736
+genPresidio:fung_timeEarly:pressurelow  -2.32872    8.44914  -0.276
+genPVL03:fung_timeEarly:pressurelow     -0.04291    4.18890  -0.010
+genCLJ01:fung_timeLate:pressurelow       3.45825    4.28656   0.807
+genCLL17:fung_timeLate:pressurelow       6.22884    7.64702   0.815
+genCLL19:fung_timeLate:pressurelow       2.77795    4.27543   0.650
+genDG263L:fung_timeLate:pressurelow     -2.29983    5.46103  -0.421
+genPVL03:fung_timeLate:pressurelow       1.77948    4.10658   0.433</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>fit warnings:
+fixed-effect model matrix is rank deficient so dropping 4 columns / coefficients</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>YLD_emm_n_lesion <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(mix_yld7, <span class="sc">~</span> gen <span class="sc">*</span> fung_time <span class="sc">*</span> pressure)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">cld</span>(YLD_emm_n_lesion , <span class="at">alpha =</span> <span class="fl">0.05</span>, <span class="at">Letters =</span> letters))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> gen      fung_time pressure emmean   SE     df lower.CL upper.CL .group 
+ DG263L   Late      low        15.1 4.60  35.04     5.73     24.4  abc   
+ CLL17    Early     low        19.1 3.61  10.12    11.09     27.2  a     
+ CLL17    Late      low        19.2 3.65  10.73    11.11     27.2  ab    
+ Presidio Late      low        19.7 3.65  10.70    11.63     27.8  ab    
+ Presidio Early     low        20.5 3.65  10.73    12.39     28.5  abc   
+ Presidio Check     low        21.0 3.63  10.42    12.92     29.0  abc   
+ DG263L   Check     low        21.6 4.07  19.67    13.12     30.1  abcd  
+ CLL17    Check     low        21.7 3.71  11.56    13.58     29.8  abc   
+ PVL03    Late      low        23.0 3.59   9.74    14.99     31.0  abc   
+ DG263L   Early     low        24.8 4.27  24.91    15.96     33.6  abcd  
+ PVL03    Check     low        25.0 3.63  10.38    16.94     33.0  abcd  
+ CLL19    Early     low        25.1 3.54   9.25    17.08     33.0  abcd  
+ CLL19    Late      low        25.1 3.63  10.38    17.08     33.2  abcd  
+ CLJ01    Early     low        25.2 3.61  10.12    17.15     33.2  abcd  
+ PVL03    Early     low        25.2 3.83  13.70    17.01     33.5  abcd  
+ CLL19    Check     low        25.3 3.68  11.12    17.21     33.4  abcd  
+ Jupiter  Early     low        26.0 6.49 140.30    13.21     38.9  abcdef
+ CLJ01    Late      low        26.5 3.67  11.07    18.41     34.6  abcd  
+ Cheniere Late      low        27.4 3.74  12.11    19.23     35.5  abcd  
+ CLJ01    Check     low        27.6 3.66  10.76    19.51     35.6   bcd  
+ Cheniere Early     low        28.1 3.61  10.12    20.09     36.2    cd  
+ Cheniere Check     low        30.9 3.61  10.10    22.89     38.9     de 
+ CLL17    Late      high       35.4 6.56 142.25    22.46     48.4  abcdef
+ Presidio Check     high       37.4 6.56 142.25    24.46     50.4  abcdef
+ Presidio Early     high       38.4 6.56 142.25    25.46     51.4  abcdef
+ DG263L   Early     high       40.3 3.49   8.95    32.42     48.2      ef
+ Cheniere Early     high       40.4 3.65  11.37    32.42     48.4      ef
+ DG263L   Late      high       40.5 3.47   8.70    32.58     48.4      ef
+ CLL17    Check     high       41.2 5.19  57.33    30.83     51.6     def
+ Jupiter  Late      high       41.5 3.54   9.70    33.57     49.4      ef
+ Jupiter  Check     high       41.5 3.54   9.70    33.57     49.4      ef
+ DG263L   Check     high       41.8 3.51   9.26    33.86     49.7       f
+ PVL03    Late      high       42.6 3.40   7.74    34.74     50.5       f
+ CLL19    Early     high       42.7 3.60  10.65    34.71     50.6       f
+ Jupiter  Early     high       42.8 3.57  10.12    34.84     50.7       f
+ PVL03    Early     high       42.9 3.37   7.51    35.02     50.8       f
+ CLJ01    Early     high       43.1 3.54   9.70    35.19     51.0       f
+ CLJ01    Late      high       43.1 3.54   9.70    35.19     51.0       f
+ PVL03    Check     high       43.4 3.42   8.03    35.53     51.3       f
+ Cheniere Late      high       43.4 3.65  11.37    35.42     51.4       f
+ Cheniere Check     high       44.0 3.50   9.21    36.12     51.9       f
+ CLL19    Check     high       44.0 3.47   8.72    36.15     51.9       f
+ CLL19    Late      high       44.0 3.54   9.70    36.11     52.0       f
+ CLJ01    Check     high       44.7 3.47   8.72    36.81     52.6       f
+ CLL17    Early     high     nonEst   NA     NA       NA       NA        
+ Presidio Late      high     nonEst   NA     NA       NA       NA        
+ Jupiter  Check     low      nonEst   NA     NA       NA       NA        
+ Jupiter  Late      low      nonEst   NA     NA       NA       NA        
 
 Degrees-of-freedom method: kenward-roger 
 Confidence level used: 0.95 
